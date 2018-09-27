@@ -45,7 +45,7 @@ const beReactive = (vals, index = undefined) => {
       return
     }
     if (vals !== 'undefined') {
-      _setReactivityForValue(vals, index)
+      console.warn('Warning: variable has to be an object or array')
     }
   }
 }
