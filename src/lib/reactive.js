@@ -16,35 +16,19 @@ class _Dep {
 
 const beReactive = (vals, index = undefined) => {
   if (index) {
-    if (Array.isArray(vals[index])) {
-      vals[index].forEach((val, ind) => {
-        beReactive(vals[index], ind)
-      })
-      return
-    }
-    if (typeof vals[index] === 'object') {
+    if (vals !== null && typeof vals[index] === 'object') {
       Object.keys(vals[index]).forEach(key => {
         beReactive(vals[index], key)
       })
-      return
-    }
-    if (vals[index] !== 'undefined') {
+    } else if (vals[index] !== 'undefined') {
       _setReactivityForValue(vals, index)
     }
   } else {
-    if (Array.isArray(vals)) {
-      vals.forEach((val, ind) => {
-        beReactive(vals, ind)
-      })
-      return
-    }
-    if (typeof vals === 'object') {
+    if (vals !== null && typeof vals === 'object') {
       Object.keys(vals).forEach(key => {
         beReactive(vals, key)
       })
-      return
-    }
-    if (vals !== 'undefined') {
+    }else if (vals !== 'undefined') {
       console.warn('Warning: variable has to be an object or array')
     }
   }

@@ -19,14 +19,7 @@ const beReactive = (vals) => {
 }
 
 const _constructDeps = (vals) => {
-  if (Array.isArray(vals)) {
-    let tempDeps = []
-    vals.forEach((val, ind) => {
-      tempDeps[ind] = _constructDeps(val)
-    })
-    return tempDeps
-  }
-  if (typeof vals === 'object') {
+  if (vals !== null && typeof vals === 'object') {
     let tempDeps = {}
     Object.keys(vals).forEach(key => {
       tempDeps[key] = _constructDeps(vals[key])
