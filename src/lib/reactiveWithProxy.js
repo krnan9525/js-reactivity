@@ -18,6 +18,12 @@ const beReactive = (vals) => {
   return _setReactivityForValue(vals)
 }
 
+const setWatcher = (func) => {
+  _target = func
+  _target()
+  _target = null
+}
+
 const _constructDeps = (vals) => {
   if (vals !== null && typeof vals === 'object') {
     let _tempDeps = {}
@@ -65,12 +71,6 @@ const _setReactivityForValue = (val) => {
     }
   }
   return new Proxy(val, validator([]))
-}
-
-const setWatcher = (func) => {
-  _target = func
-  _target()
-  _target = null
 }
 
 module.exports = { beReactive, setWatcher }
