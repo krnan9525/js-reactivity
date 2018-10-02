@@ -7,15 +7,24 @@ let product = {
   }
 }
 
-product = beReactive(product)
+const productReactive = beReactive(product)
 
 let totalPrice = {}
-// totalPrice.beer = product.beer.amount * product.beer.price
 
-setWatcher(() => {totalPrice.beer = product.beer.amount * product.beer.price})
+setWatcher(() => {totalPrice.beer = productReactive.beer.amount * productReactive.beer.price})
 
 console.log(totalPrice)
 
-product.beer.amount = 10
+productReactive.beer.amount = 10
+
+console.log(totalPrice)
+
+productReactive.tea = {amount: 10, price: 10}
+
+setWatcher(() => {totalPrice.tea = productReactive.tea.amount * productReactive.tea.price})
+
+console.log(totalPrice)
+
+productReactive.tea.amount = 100
 
 console.log(totalPrice)

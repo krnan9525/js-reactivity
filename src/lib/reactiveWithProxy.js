@@ -58,15 +58,22 @@ const _setReactivityForValue = (val) => {
           }
         }
       },
-        set (obj, key, newVal) {
-          let __path = varPath.slice()
+      set (obj, key, newVal) {
+        let _path = varPath.slice()
+        let _currentDep = _deps
+        _path.forEach(tempPath => _currentDep = _currentDep[tempPath])
+        if (typeof newVal === 'object' && newVal !== null) {
+          !_currentDep[key] && (_currentDep[key] = {})
+          _path.push(key)
+          obj[key] = {}
+          obj[key] = new Proxy(obj[key], validator(_path))
+          Object.keys(newVal).forEach(_key => obj[key][_key] = newVal[_key])
+        } else {
           obj[key] = newVal
-          let _currentDep = _deps
-          __path.forEach(tempPath => _currentDep = _currentDep[tempPath])
-          if(_currentDep[key]) {
-            _currentDep[key].notify()
-          }
-          return true
+          !_currentDep[key] && (_currentDep[key] = new _Dep())
+          _currentDep[key].notify()
+        }
+        return true
       }
     }
   }
