@@ -28,7 +28,7 @@ const beReactive = (vals, index = undefined) => {
       Object.keys(vals).forEach(key => {
         beReactive(vals, key)
       })
-    }else if (vals !== 'undefined') {
+    } else if (vals !== 'undefined') {
       console.warn('Warning: variable has to be an object or array')
     }
   }
